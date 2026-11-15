@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Anime Telugu Hub</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body { background-color: #0b0f19; color: #f8fafc; font-family: system-ui, sans-serif; }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+  <!-- Navbar -->
+  <header class="bg-slate-900/90 border-b border-slate-800 sticky top-0 z-40 backdrop-blur">
+    <div class="max-w-7xl mx-auto px-4 py-4 flex flex-wrap items-center justify-between gap-4">
+      <div class="flex items-center gap-2">
+        <span class="bg-indigo-600 text-white font-bold px-2.5 py-1 rounded text-lg">ATH</span>
+        <h1 class="text-xl font-bold tracking-wide">Anime <span class="text-indigo-400">Telugu</span> Hub</h1>
+      </div>
+
+      <!-- Search & Filter -->
+      <div class="flex items-center gap-3 w-full sm:w-auto">
+        <input 
+          id="searchInput" 
+          type="text" 
+          placeholder="Search Telugu anime..." 
+          class="bg-slate-800 text-sm rounded-lg px-4 py-2 w-full sm:w-64 border border-slate-700 focus:outline-none focus:border-indigo-500"
+        />
+        <select id="genreFilter" class="bg-slate-800 text-sm rounded-lg px-3 py-2 border border-slate-700 focus:outline-none">
+          <option value="All">All Genres</option>
+          <option value="Action">Action</option>
+          <option value="Fantasy">Fantasy</option>
+          <option value="Adventure">Adventure</option>
+        </select>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Banner -->
+  <section class="relative bg-gradient-to-r from-indigo-950 via-slate-900 to-slate-950 border-b border-slate-800">
+    <div class="max-w-7xl mx-auto px-4 py-12 md:py-16 flex flex-col md:flex-row items-center justify-between gap-8">
+      <div class="max-w-2xl space-y-4">
+        <span class="inline-block bg-indigo-600/20 text-indigo-300 border border-indigo-500/30 text-xs font-semibold px-3 py-1 rounded-full">
+          TELUGU DUB • HD 1080p
+        </span>
+        <h2 class="text-3xl md:text-5xl font-extrabold leading-tight">
+          Solo Leveling (Telugu Dub)
+        </h2>
+        <p class="text-slate-400 text-sm md:text-base">
+          In a world where hunters must battle deadly monsters to protect humanity, Sung Jinwoo finds himself in an endless struggle for survival—until a mysterious system chooses him.
+        </p>
+        <div class="pt-2 flex gap-3">
+          <button onclick="openPlayer('Solo Leveling - Episode 1 (Telugu)', 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4')" 
+            class="bg-indigo-600 hover:bg-indigo-500 text-white font-semibold px-6 py-2.5 rounded-lg transition">
+            ▶ Watch Now
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Anime Catalog Grid -->
+  <main class="max-w-7xl mx-auto px-4 py-10 flex-1 w-full">
+    <div class="flex items-center justify-between mb-6">
+      <h3 class="text-xl font-bold border-l-4 border-indigo-500 pl-3">Latest Telugu Dubbed Releases</h3>
+    </div>
+
+    <div id="animeGrid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
+      <!-- Cards injected via JavaScript -->
+    </div>
+  </main>
+
+  <!-- Video Player Modal -->
+  <div id="playerModal" class="fixed inset-0 bg-black/85 hidden items-center justify-center z-50 p-4">
+    <div class="bg-slate-900 border border-slate-700 rounded-xl max-w-4xl w-full overflow-hidden shadow-2xl">
+      <div class="flex items-center justify-between px-4 py-3 border-b border-slate-800">
+        <h4 id="modalTitle" class="font-semibold text-indigo-300">Now Playing</h4>
+        <button onclick="closePlayer()" class="text-slate-400 hover:text-white text-xl font-bold">&times;</button>
+      </div>
+      <div class="bg-black aspect-video">
+        <video id="videoPlayer" class="w-full h-full" controls autoplay>
+          <source id="videoSource" src="" type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="bg-slate-900 border-t border-slate-800 py-6 text-center text-xs text-slate-500">
+    Anime Telugu Hub Template • Built with HTML, Tailwind CSS & Vanilla JS
+  </footer>
+
+  <!-- App Logic -->
+  <script>
+    // Sample Dataset (Replace videoUrl and poster with your own links/API)
+    const animeList = [
+      {
+        title: "Naruto Shippuden",
+        episodes: "Ep 1 - 500",
+        genre: "Action",
+        audio: "Telugu Dub",
+        poster: "https://images.unsplash.com/photo-1578632767115-351597cf2477?auto=format&fit=crop&w=500&q=80",
+        videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
+      },
+      {
+        title: "Demon Slayer",
+        episodes: "Season 1 - 3",
+        genre: "Fantasy",
+        audio: "Telugu Dub",
+        poster: "https://images.unsplash.com/photo-1618336753974-aae8e04506aa?auto=format&fit=crop&w=500&q=80",
+        videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4"
+      },
+      {
+        title: "Jujutsu Kaisen",
+        episodes: "Season 1 - 2",
+        genre: "Action",
+        audio: "Telugu Dub",
+        poster: "https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?auto=format&fit=crop&w=500&q=80",
+        videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4"
+      },
+      {
+        title: "One Piece",
+        episodes: "East Blue Saga",
+        genre: "Adventure",
+        audio: "Telugu Sub/Dub",
+        poster: "https://images.unsplash.com/photo-1541562232579-512a21360020?auto=format&fit=crop&w=500&q=80",
+        videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4"
+      },
+      {
+        title: "Dragon Ball Super",
+        episodes: "Ep 1 - 131",
+        genre: "Action",
+        audio: "Telugu Dub",
+        poster: "https://images.unsplash.com/photo-1560972550-aba3456b5564?auto=format&fit=crop&w=500&q=80",
+        videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4"
+      }
+    ];
+
+    const grid = document.getElementById("animeGrid");
+    const searchInput = document.getElementById("searchInput");
+    const genreFilter = document.getElementById("genreFilter");
+
+    function renderAnime(items) {
+      grid.innerHTML = items.map(anime => `
+        <div onclick="openPlayer('${anime.title} (${anime.audio})', '${anime.videoUrl}')"
+             class="group bg-slate-900 border border-slate-800 rounded-xl overflow-hidden cursor-pointer hover:border-indigo-500 transition shadow-lg">
+          <div class="relative aspect-[2/3] overflow-hidden">
+            <img src="${anime.poster}" alt="${anime.title}" class="w-full h-full object-cover group-hover:scale-105 transition duration-300" />
+            <span class="absolute top-2 left-2 bg-indigo-600 text-[11px] font-bold px-2 py-0.5 rounded">
+              ${anime.audio}
+            </span>
+            <span class="absolute bottom-2 right-2 bg-black/80 text-[11px] px-2 py-0.5 rounded">
+              ${anime.episodes}
+            </span>
+          </div>
+          <div class="p-3">
+            <h4 class="font-semibold text-sm truncate group-hover:text-indigo-400 transition">${anime.title}</h4>
+            <p class="text-xs text-slate-400 mt-1">${anime.genre}</p>
+          </div>
+        </div>
+      `).join("");
+    }
+
+    function filterAnime() {
+      const query = searchInput.value.toLowerCase();
+      const genre = genreFilter.value;
+      const filtered = animeList.filter(a => {
+        const matchesSearch = a.title.toLowerCase().includes(query);
+        const matchesGenre = genre === "All" || a.genre === genre;
+        return matchesSearch && matchesGenre;
+      });
+      renderAnime(filtered);
+    }
+
+    function openPlayer(title, url) {
+      document.getElementById("modalTitle").innerText = title;
+      const video = document.getElementById("videoPlayer");
+      document.getElementById("videoSource").src = url;
+      video.load();
+      document.getElementById("playerModal").classList.remove("hidden");
+      document.getElementById("playerModal").classList.add("flex");
+    }
+
+    function closePlayer() {
+      const video = document.getElementById("videoPlayer");
+      video.pause();
+      document.getElementById("playerModal").classList.add("hidden");
+      document.getElementById("playerModal").classList.remove("flex");
+    }
+
+    searchInput.addEventListener("input", filterAnime);
+    genreFilter.addEventListener("change", filterAnime);
+
+    // Initial render
+    renderAnime(animeList);
+  </script>
+</body>
+</html>
